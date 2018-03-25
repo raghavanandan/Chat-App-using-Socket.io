@@ -3,7 +3,7 @@ const path = require('path');
 const http = require('http');
 const socketIO = require('socket.io');
 
-const {genMsg} = require('./utils/messaging');
+const {genMsg, genLocationMsg} = require('./utils/messaging');
 
 const publicPath = path.join(__dirname, '../public');
 
@@ -35,7 +35,11 @@ io.on('connection', (socket) => {
     //   text: message.text,
     //   createdAt: new Date().getTime()
     // });
-  })
+  });
+
+  socket.on('createLocationMessage', (coords) => {
+    io.emit('newLocationMessage', genLocationMsg('Admin', coords.latitude, coords.longitude))
+  });
 
   socket.on('disconnect', () => {
     console.log("Client disconencted");
