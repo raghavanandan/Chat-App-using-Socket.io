@@ -9,17 +9,18 @@ socket.on('disconnect', function () {
 });
 
 socket.on('newMessage', function (message) {
-  console.log('New Message', message);
+  var formattedTime = moment(message.createdAt).format('h:mm a');
   var li = $('<li></li>');
-  li.text(`${message.from}: ${message.text}`);
+  li.text(`${message.from} : ${message.text} ${formattedTime}`);
 
   $('#convo').append(li);
 });
 
 socket.on('newLocationMessage', function (message) {
+  var formattedTime = moment(message.createdAt).format('h:mm a');
   var li = $('<li></li>');
-  var a = $('<a target="_blank">My current location</a>')
-  li.text(`${message.from}: `);
+  var a = $('<a target="_blank">My current location</a> ')
+  li.text(`${message.from} ${formattedTime}: `);
   a.attr('href', message.url);
   li.append(a);
   $('#convo').append(li);
@@ -51,7 +52,7 @@ locBtn.on('click', function () {
 
   navigator.geolocation.getCurrentPosition(function (position) {
     locBtn.removeAttr('disabled').text('Send location');
-    console.log('Position', position);
+    // console.log('Position', position);
     socket.emit('createLocationMessage', {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
