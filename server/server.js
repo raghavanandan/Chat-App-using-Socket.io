@@ -28,7 +28,7 @@ io.on('connection', (socket) => {
     /*****socket.emit() emits to only one connection********/
     /*****io.emit() emits to all connected users*******/
     io.emit('newMessage', genMsg(message.from, message.text));
-    callback('This is from the server');
+    callback();
     /******** Broadcast messages ***********/
     // socket.broadcast.emit('newMessage', {
     //   from: message.from,
