@@ -72,14 +72,11 @@ $('#chat-form').on('submit', function (event) {
 
   var textBox = $('[name=message]');
 
-  if(textBox.val() !== '') {
     socket.emit('createMessage', {
-      from: 'User',
       text: textBox.val()
     }, function () {
       textBox.val('');
     });
-  }
 });
 
 
